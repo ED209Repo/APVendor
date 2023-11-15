@@ -76,7 +76,7 @@ class _OnboardscreenState extends State<OnboardScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: Image.asset(
-                'images/onboarding2.png',
+                'images/onboarding4.png',
                 height: 250,
                 width: 250,
               ),
@@ -134,7 +134,7 @@ class _OnboardscreenState extends State<OnboardScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: Image.asset(
-              "images/image1.png",
+              "images/continue.png",
               height: 150,
               width: 150,
             ),

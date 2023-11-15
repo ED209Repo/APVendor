@@ -1,7 +1,9 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
-import 'package:vendor/Widgets/AppColors.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'dart:async';
 import 'OrdersModel.dart';
+import 'Widgets/AppColors.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 class SlidingSegmentedControlDemo extends StatefulWidget {
   @override
@@ -12,32 +14,120 @@ class SlidingSegmentedControlDemo extends StatefulWidget {
 class _SlidingSegmentedControlDemoState
     extends State<SlidingSegmentedControlDemo> {
   int _currentIndex = 0;
-  final GlobalKey<ExpansionTileCardState> cardA = GlobalKey();
-  bool orderAccepted = false;
   int currentOrderIndex = 0;
 
   List<Order> orders = OrderModel.items;
+  final List<String> _segments = ["   Current   ", "Ready to Pick", "   History   "];
+  bool isSwipeEnabled1 = false;
+  bool isSwipeEnabled2 = false;
 
-  final List<String> _segments = ["Current", "Ready to Pick", "History"];
+  late Timer _timer1;
+  int _timerDuration1 = 0;
+  bool showButtons1 = true;
+  bool isOrderCompleted1 = false;
+  bool isOrderCancelled1 = false;
 
+  late Timer _timer2;
+  int _timerDuration2 = 0;
+  bool showButtons2 = true;
+  bool isOrderCompleted2 = false;
+  bool isOrderCancelled2 = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _startTimer1() {
+    _timer1 = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_timerDuration1 <= 0) {
+        timer.cancel();
+        setState(() {
+          isOrderCompleted1 = true;
+        });
+      } else {
+        setState(() {
+          _timerDuration1--;
+        });
+      }
+    });
+  }
+
+  void _startTimer2() {
+    _timer2 = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_timerDuration2 <= 0) {
+        timer.cancel();
+        setState(() {
+          isOrderCompleted2 = true;
+        });
+      } else {
+        setState(() {
+          _timerDuration2--;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer1.cancel();
+    _timer2.cancel();
+    super.dispose();
+  }
+
+  void acceptOrder1() {
+    if (_timerDuration1 == 0 && showButtons1) {
+      setState(() {
+        showButtons1 = false;
+        _timerDuration1 = 5;
+        _startTimer1();
+        isSwipeEnabled1 = true;
+      });
+    }
+  }
+
+  void acceptOrder2() {
+    if (_timerDuration2 == 0 && showButtons2) {
+      setState(() {
+        showButtons2 = false;
+        _timerDuration2 = 5; // Reset timer duration to 30 minutes
+        _startTimer2();
+        isSwipeEnabled2 = true;
+      });
+    }
+  }
+
+  void rejectOrder1() {
+    if (showButtons1) {
+      setState(() {
+        showButtons1 = false;
+        isOrderCancelled1 = true;
+      });
+    }
+  }
+
+  void rejectOrder2() {
+    if (showButtons2) {
+      setState(() {
+        showButtons2 = false;
+        isOrderCancelled2 = true;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     bool allOrdersProcessed = currentOrderIndex >= orders.length;
-    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-      ),
-    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 17, right: 17),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: const Color(0xff00A4B4), // Change to your desired color
+              color: AppColors.themeColor2.withOpacity(0.7),
             ),
             width: double.infinity,
             child: Row(
@@ -79,12 +169,8 @@ class _SlidingSegmentedControlDemoState
         IndexedStack(
           index: _currentIndex,
           children: <Widget>[
-            // Content for Segment 1
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: allOrdersProcessed
-                  ? Center(
+            if (allOrdersProcessed)
+              Center(
                 child: Text(
                   "All orders have been processed.",
                   style: TextStyle(
@@ -92,113 +178,259 @@ class _SlidingSegmentedControlDemoState
                     fontSize: 18.0,
                   ),
                 ),
-              ) : ListView(
-                children: <Widget>[
+              )
+            else
+              Column(
+                children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: ExpansionTileCard(
-                      expandedColor: AppColors.themeColor2,
-                      expandedTextColor: Colors.white,
-                      baseColor: AppColors.themeColor2,
-                      key: cardA,
-                      leading:  CircleAvatar(child:  ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Image.asset(
-                          orders[currentOrderIndex].imageUrl, // Access imageUrl for the current order
-                          fit: BoxFit.cover,
+                    child: SwipeActionCell(
+                      key: ObjectKey(orders[currentOrderIndex]),
+                      trailingActions: <SwipeAction>[
+                        if (isSwipeEnabled1 && !isOrderCancelled1 && isOrderCompleted1)
+                        SwipeAction(
+                          performsFirstActionWithFullSwipe: true,
+                          title: "Done",
+                          onTap: (CompletionHandler handler) async {
+                             {
+                               handler(true);
+                            }
+                          },
+                          color: AppColors.themeColor2,
                         ),
-                      ),),
-                      title:  Text('Title: ${orders[currentOrderIndex].title}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),),
-                      subtitle: Text('Order No: ${orders[currentOrderIndex].orderNo}', style: const TextStyle(
-                        color: Colors.white,
-                      ),),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min, // Ensure buttons are close together
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green,
-                            ),
-                            child: IconButton(
-                              style: flatButtonStyle,
-                              onPressed: () {
-                                // Handle Accept button
-                                // You can add your logic here to handle the order acceptance
-                                // For this example, we'll move to the next order in the list
-                                if (currentOrderIndex < orders.length - 1) {
-                                  currentOrderIndex++;
-                                  setState(() {});
-                                }
-                              },
-                              icon: const Icon(Icons.done,color: Colors.white,),
+                      ],
+                      child: ExpansionTileCard(
+                        expandedColor: isOrderCancelled1
+                            ? Colors.grey
+                            : isOrderCompleted1
+                            ? Colors.green
+                            : AppColors.themeColor2,
+                        expandedTextColor: Colors.white,
+                        baseColor: isOrderCancelled1
+                            ? Colors.grey
+                            : isOrderCompleted1
+                            ? Colors.green
+                            : AppColors.themeColor2,
+                        key: GlobalKey(),
+                        leading: CircleAvatar(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: Image.asset(
+                              orders[currentOrderIndex].imageUrl,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Container(
-                            height: 40,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.red,
+                        ),
+                        title: Text(
+                          '${orders[currentOrderIndex].title}',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Order No: ${orders[currentOrderIndex].orderNo}',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        trailing: showButtons1
+                            ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.green,
+                              ),
+                              child: IconButton(
+                                onPressed: acceptOrder1,
+                                icon: Icon(Icons.done, color: Colors.white),
+                              ),
                             ),
-                            child: IconButton(
-                              style: flatButtonStyle,
-                              onPressed: () {
-                                // Handle Reject button
-                                // You can add your logic here to handle order rejection
-                                // For this example, we'll move to the next order in the list
-                                if (currentOrderIndex < orders.length - 1) {
-                                  currentOrderIndex++;
-                                  setState(() {});
-                                }
-                              },
-                              icon: const Icon(Icons.clear,color: Colors.white,),
+                            Container(
+                              height: 40,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                              child: IconButton(
+                                onPressed: rejectOrder1,
+                                icon: Icon(Icons.clear, color: Colors.white),
+                              ),
                             ),
+                          ],
+                        )
+                            : _timerDuration1 > 0
+                            ? Text(
+                          "${_timerDuration1 ~/ 60}:${(_timerDuration1 % 60).toString().padLeft(2, '0')}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        )
+                            : Text(
+                          isOrderCancelled1
+                              ? "Cancelled"
+                              : "Ready to Pick",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        children: <Widget>[
+                          Divider(
+                            thickness: 1.0,
+                            height: 1.0,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              ListTile(
+                                tileColor: isOrderCancelled1
+                                    ? Colors.grey
+                                    : AppColors.themeColor2,
+                                title: Text(
+                                  '${orders[currentOrderIndex].description}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      children: <Widget>[
-                        const Divider(
-                          thickness: 1.0,
-                          height: 1.0,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            ListTile(
-                              tileColor: AppColors.themeColor2,
-                              title:  Text('${orders[currentOrderIndex].description}',style: const TextStyle(
-                                color: Colors.white,
-                              ),),
-                            ),
-                          ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: SwipeActionCell(
+                      key: ObjectKey(orders[currentOrderIndex]),
+                      trailingActions: <SwipeAction>[
+                        if (isSwipeEnabled2 && !isOrderCancelled2 && isOrderCompleted2)
+                        SwipeAction(
+                          performsFirstActionWithFullSwipe: true,
+                          title: "Done",
+                          onTap: (CompletionHandler handler) async {
+                            if (isSwipeEnabled2 && !isOrderCancelled2 && isOrderCompleted2) {
+                              // Only allow swipe action when isSwipeEnabled2 is true, order is not cancelled, and isOrderCompleted2 is true
+                              // Perform additional actions if needed
+                              handler(true);
+                            }
+                          },
+                          color: AppColors.themeColor2,
                         ),
                       ],
+                      child: ExpansionTileCard(
+                        expandedColor: isOrderCancelled2
+                            ? Colors.grey
+                            : isOrderCompleted2
+                            ? Colors.green
+                            : AppColors.themeColor2,
+                        expandedTextColor: Colors.white,
+                        baseColor: isOrderCancelled2
+                            ? Colors.grey
+                            : isOrderCompleted2
+                            ? Colors.green
+                            : AppColors.themeColor2,
+                        key: GlobalKey(),
+                        leading: CircleAvatar(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: Image.asset(
+                              'images/kfc12.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        title: Text(
+                          'KFC',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        subtitle: Text(
+                          'Order No: 26',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        trailing: showButtons2
+                            ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.green,
+                              ),
+                              child: IconButton(
+                                onPressed: acceptOrder2,
+                                icon: Icon(Icons.done, color: Colors.white),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                              child: IconButton(
+                                onPressed: rejectOrder2,
+                                icon: Icon(Icons.clear, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        )
+                            : _timerDuration2 > 0
+                            ? Text(
+                          "${_timerDuration2 ~/ 60}:${(_timerDuration2 % 60).toString().padLeft(2, '0')}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        )
+                            : Text(
+                          isOrderCancelled2
+                              ? "Cancelled"
+                              : "Ready to Pick",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        children: <Widget>[
+                          Divider(
+                            thickness: 1.0,
+                            height: 1.0,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              ListTile(
+                                tileColor: isOrderCancelled2
+                                    ? Colors.grey
+                                    : AppColors.themeColor2,
+                                title: Text(
+                                  '${orders[currentOrderIndex].description}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            // Content for Segment 2
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: const Center(
-                child: Text("Segment 2 Content"),
-              ),
-            ),
-            // Content for Segment 3
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: const Center(
-                child: Text("Segment 3 Content"),
-              ),
-            ),
           ],
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vendor/HomeScreen.dart';
 import 'package:vendor/controller/language_change_controller.dart';
 import 'SplashScreen.dart';
 
@@ -33,7 +34,7 @@ void main() async {
               Locale('ar'),
             ],
             debugShowCheckedModeBanner: false,
-            home: const Splashscreen(),
+            home: HomeScreen(),
           );
         },
       ),

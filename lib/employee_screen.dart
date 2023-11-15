@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vendor/Widgets/AppColors.dart';
 import 'dart:io';
 import 'employee.model.dart';
 import 'package:intl/intl.dart';
@@ -19,14 +20,14 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.themeColor2,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('Employees', style: TextStyle(color: Colors.black, fontSize: 24)),
+        title: Text('Employees', style: TextStyle(color: Colors.white, fontSize: 24)),
         actions: [
           IconButton(
-            icon: Icon(Icons.add, color: Colors.black),
+            icon: Icon(Icons.add, color: Colors.white),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => AddEmployeeScreen(
                   onEmployeeAdded: (Employee? newEmployee) {
@@ -157,8 +158,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Add Employee', style: TextStyle(color: Colors.black, fontSize: 24)),
-        backgroundColor: Colors.transparent,
+        title: Text('Add Employee', style: TextStyle(color: Colors.white, fontSize: 24)),
+        backgroundColor: AppColors.themeColor2,
+        automaticallyImplyLeading: true,
         elevation: 0,
       ),
       body: Padding(

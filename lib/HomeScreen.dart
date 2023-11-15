@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
+import 'package:vendor/Locations.dart';
+import 'package:vendor/MenuScreen.dart';
 import 'package:vendor/Widgets/AppColors.dart';
 import 'package:vendor/HomeScreenTabbar.dart';
-
+import 'dashboardscreen.dart';
 import 'employee_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,22 +22,28 @@ class _HomeScreenState extends State<HomeScreen> {
     Container(
       color: AppColors.themeColor,
       alignment: Alignment.center,
-      child:    DefaultTabController(
+      child: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: AppColors.themeColor2,
             elevation: 0,
-            title: const Text("Order Queue",style: TextStyle(
+            automaticallyImplyLeading: false,
+            title: const Text("Order Queue", style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color: Colors.black
-            ),),
+              color: Colors.white,
+            )),
             centerTitle: true,
           ),
-          body: Container(
-            child: SlidingSegmentedControlDemo(),
-          )
+          body: Column(
+            children: [
+              SizedBox(height: 10), // Add a gap here
+              Container(
+                child: SlidingSegmentedControlDemo(),
+              ),
+            ],
+          ),
         ),
       ),
     ),
@@ -45,20 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     // Screen for 'Locations' tab
     Container(
-      color: AppColors.themeColor,
-      alignment: Alignment.center,
-      child: const Text("This is the content of the 'dashboard' tab"),
+      child: DashboardScreen(),
     ),
     // Screen for 'Settings' tab
     Container(
-      color: AppColors.themeColor2,
-      alignment: Alignment.center,
-      child: const Text("This is the content of the 'Location' tab"),
+      child: LocationScreen(),
     ),
     Container(
-      color: AppColors.themeColor2,
-      alignment: Alignment.center,
-      child: const Text("This is the content of the 'Settings' tab"),
+      child: MenuScreen(),
     ),
   ];
 
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }),
         items:  [
           FlashyTabBarItem(
-            icon: Icon(Icons.access_time, color: _selectedIndex == 0 ? AppColors.themeColor2 : AppColors.themeColor2),
+            icon: Icon(Icons.shopping_cart, color: _selectedIndex == 0 ? AppColors.themeColor2 : AppColors.themeColor2),
             title: Text('Order', style: TextStyle(color: _selectedIndex == 0 ?  AppColors.themeColor2 : AppColors.themeColor2)),
           ),
           FlashyTabBarItem(
@@ -85,15 +87,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.home, color: _selectedIndex == 3 ?  AppColors.themeColor2 : AppColors.themeColor2),
-            title: Text('Dashboard', style: TextStyle(color: _selectedIndex == 3 ?  AppColors.themeColor : AppColors.themeColor)),
+            title: Text('Home', style: TextStyle(color: _selectedIndex == 3 ?  AppColors.themeColor2 : AppColors.themeColor2)),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.near_me_outlined, color: _selectedIndex == 2 ?  AppColors.themeColor2 : AppColors.themeColor2),
+            icon: Icon(Icons.near_me, color: _selectedIndex == 2 ?  AppColors.themeColor2 : AppColors.themeColor2),
             title: Text('Locations', style: TextStyle(color: _selectedIndex == 2 ?  AppColors.themeColor2 : AppColors.themeColor2)),
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.restaurant, color: _selectedIndex == 3 ?  AppColors.themeColor2 : AppColors.themeColor2),
-            title: Text('Settings', style: TextStyle(color: _selectedIndex == 3 ?  AppColors.themeColor : AppColors.themeColor2)),
+            title: Text('Menu', style: TextStyle(color: _selectedIndex == 3 ?  AppColors.themeColor : AppColors.themeColor)),
           ),
         ],
       ),

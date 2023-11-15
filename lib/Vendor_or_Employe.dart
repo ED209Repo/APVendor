@@ -29,7 +29,7 @@ class _VendorScreenState extends State<VendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("SignUp as",style:TextStyle(
+            Text("Login as",style:TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: AppColors.whitetext,

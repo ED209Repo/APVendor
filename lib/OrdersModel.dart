@@ -1,3 +1,4 @@
+enum OrderStatus { current, readyToPick, history }
 class Order {
   final String title;
   final String description;

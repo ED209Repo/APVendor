@@ -26,10 +26,10 @@ class _otpscreenState extends State<otpscreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: Icon(Icons.arrow_back_ios_new),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () => Navigator.of(context).pop(),
+                      //   child: Icon(Icons.arrow_back_ios_new),
+                      // ),
                       const Spacer(),
                       const Spacer(),
                       const Text("Verify phone number",style: TextStyle(
