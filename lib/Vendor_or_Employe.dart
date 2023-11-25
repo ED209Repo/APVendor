@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vendor/SignUp.dart';
 import 'package:vendor/Widgets/AppColors.dart';
 import 'package:vendor/Widgets/CustomButton.dart';
-
-import 'LoginPage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'Employe_code.dart';
 class VendorScreen extends StatefulWidget {
   const VendorScreen({super.key});
 
@@ -29,17 +29,18 @@ class _VendorScreenState extends State<VendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Login as",style:TextStyle(
+            Text(AppLocalizations.of(context)!.loginas,
+              style:TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: AppColors.whitetext,
             ),),
             const SizedBox(height: 30),
-           CustomButton(text: "Restaurant Owner", onPressed: (){
+           CustomButton(text: AppLocalizations.of(context)!.owner, onPressed: (){
              Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignupPage()));
            }),
             const SizedBox(height: 30),
-            Text("Or",
+            Text(AppLocalizations.of(context)!.or,
               style:TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
@@ -56,9 +57,9 @@ class _VendorScreenState extends State<VendorScreen> {
                   minimumSize: const Size(165, 47),
                 ),
               onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const ecodescreen()));
              },
-              child: const Text("Employee" ),),
+              child: Text(AppLocalizations.of(context)!.employee),),
           ],
         ),
       )

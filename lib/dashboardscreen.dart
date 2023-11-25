@@ -4,6 +4,7 @@ import 'MenuScreen.dart';
 import 'Widgets/AppColors.dart';
 import 'chart2.dart';
 import 'charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -13,13 +14,19 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 
-  final List<String> _drawerItems = [
-    'Dashboard',
-    'Reports',
-    'Payments',
-    'Menu',
-    'Orders',
-  ];
+  late List<String> _drawerItems;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _drawerItems = [
+      AppLocalizations.of(context)!.dashboard,
+      AppLocalizations.of(context)!.reports,
+      AppLocalizations.of(context)!.payments,
+      AppLocalizations.of(context)!.menu,
+      AppLocalizations.of(context)!.order,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(AppLocalizations.of(context)!.home),
         centerTitle: true,
         backgroundColor: AppColors.themeColor2,
       ),
@@ -71,13 +78,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 } else if (index == _drawerItems.length + 2) {
                   // Account Pages header
                   return ListTile(
-                    title: Text('Account Pages'),
+                    title: Text(AppLocalizations.of(context)!.accountpages),
                   );
                 } else if (index == _drawerItems.length + 3) {
                   // Profile item
                   return ListTile(
                     leading: Icon(Icons.person),
-                    title: Text('Profile'),
+                    title: Text(AppLocalizations.of(context)!.profile),
                     onTap: () {
                       // Add functionality for Profile
                     },
@@ -86,7 +93,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   // Logout item
                   return ListTile(
                     leading: Icon(Icons.logout),
-                    title: Text('Logout'),
+                    title: Text(AppLocalizations.of(context)!.logout),
                     onTap: () {
                       // Add functionality for Logout
                     },

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'OrdersModel.dart';
 import 'Widgets/AppColors.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SlidingSegmentedControlDemo extends StatefulWidget {
   @override
@@ -16,10 +17,8 @@ class _SlidingSegmentedControlDemoState
   int _currentIndex = 0;
   int currentOrderIndex = 0;
 
-  List<Order> orders = OrderModel.items;
-  final List<String> _segments = ["   Current   ", "Ready to Pick", "   History   "];
-  bool isSwipeEnabled1 = false;
-  bool isSwipeEnabled2 = false;
+  late List<String> _segments;
+  late List<Order> orders;
 
   late Timer _timer1;
   int _timerDuration1 = 0;
@@ -34,8 +33,16 @@ class _SlidingSegmentedControlDemoState
   bool isOrderCancelled2 = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _segments = [
+      AppLocalizations.of(context)!.current,
+      AppLocalizations.of(context)!.readytopick,
+      AppLocalizations.of(context)!.history,
+    ];
+
+    orders = OrderModel.items;
   }
 
   void _startTimer1() {
@@ -81,7 +88,6 @@ class _SlidingSegmentedControlDemoState
         showButtons1 = false;
         _timerDuration1 = 5;
         _startTimer1();
-        isSwipeEnabled1 = true;
       });
     }
   }
@@ -90,9 +96,8 @@ class _SlidingSegmentedControlDemoState
     if (_timerDuration2 == 0 && showButtons2) {
       setState(() {
         showButtons2 = false;
-        _timerDuration2 = 5; // Reset timer duration to 30 minutes
+        _timerDuration2 = 5;
         _startTimer2();
-        isSwipeEnabled2 = true;
       });
     }
   }
@@ -114,6 +119,7 @@ class _SlidingSegmentedControlDemoState
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     bool allOrdersProcessed = currentOrderIndex >= orders.length;
@@ -187,17 +193,15 @@ class _SlidingSegmentedControlDemoState
                     child: SwipeActionCell(
                       key: ObjectKey(orders[currentOrderIndex]),
                       trailingActions: <SwipeAction>[
-                        if (isSwipeEnabled1 && !isOrderCancelled1 && isOrderCompleted1)
-                        SwipeAction(
-                          performsFirstActionWithFullSwipe: true,
-                          title: "Done",
-                          onTap: (CompletionHandler handler) async {
-                             {
-                               handler(true);
-                            }
-                          },
-                          color: AppColors.themeColor2,
-                        ),
+                        if (isOrderCompleted1)
+                          SwipeAction(
+                            performsFirstActionWithFullSwipe: true,
+                            title: "Done",
+                            onTap: (CompletionHandler handler) async {
+                              handler(true);
+                            },
+                            color: AppColors.themeColor2,
+                          ),
                       ],
                       child: ExpansionTileCard(
                         expandedColor: isOrderCancelled1
@@ -310,19 +314,17 @@ class _SlidingSegmentedControlDemoState
                     child: SwipeActionCell(
                       key: ObjectKey(orders[currentOrderIndex]),
                       trailingActions: <SwipeAction>[
-                        if (isSwipeEnabled2 && !isOrderCancelled2 && isOrderCompleted2)
-                        SwipeAction(
-                          performsFirstActionWithFullSwipe: true,
-                          title: "Done",
-                          onTap: (CompletionHandler handler) async {
-                            if (isSwipeEnabled2 && !isOrderCancelled2 && isOrderCompleted2) {
-                              // Only allow swipe action when isSwipeEnabled2 is true, order is not cancelled, and isOrderCompleted2 is true
-                              // Perform additional actions if needed
-                              handler(true);
-                            }
-                          },
-                          color: AppColors.themeColor2,
-                        ),
+                        if (isOrderCompleted2)
+                          SwipeAction(
+                            performsFirstActionWithFullSwipe: true,
+                            title: "Done",
+                            onTap: (CompletionHandler handler) async {
+                              if (isOrderCompleted2) {
+                                handler(true);
+                              }
+                            },
+                            color: AppColors.themeColor2,
+                          ),
                       ],
                       child: ExpansionTileCard(
                         expandedColor: isOrderCancelled2
@@ -436,4 +438,5 @@ class _SlidingSegmentedControlDemoState
       ],
     );
   }
+
 }

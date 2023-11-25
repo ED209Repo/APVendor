@@ -65,7 +65,8 @@ class _registerscreenState extends State<registerscreen> {
                       ),
                       const Spacer(),
                       const Spacer(),
-                      const Text("Login",style: TextStyle(
+                      Text(AppLocalizations.of(context)!.login,
+                        style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold
                       ),),

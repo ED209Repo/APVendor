@@ -1,6 +1,8 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:vendor/HomeScreen.dart';
+import 'package:vendor/Employe_code.dart';
 import 'package:vendor/Vendor_or_Employe.dart';
 import 'SignUp.dart';
 import 'Widgets/AppColors.dart';
@@ -32,7 +34,8 @@ class _otpscreenState extends State<otpscreen> {
                       // ),
                       const Spacer(),
                       const Spacer(),
-                      const Text("Verify phone number",style: TextStyle(
+                      Text(AppLocalizations.of(context)!.verifynumber,
+                        style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold
                       ),),
@@ -73,19 +76,46 @@ class _otpscreenState extends State<otpscreen> {
                       ),
                     ),
                     onCompleted: (pin) async {
-                      if (pin.length == 6){
-                        CoolAlert.show(context: context, type: CoolAlertType.loading,
-                          text: AppLocalizations.of(context)!.otpverified,
-                          autoCloseDuration: const Duration(seconds: 2),
-                          lottieAsset: "images/verified.json",
-                          animType: CoolAlertAnimType.scale,
-                        );
-                        await Future.delayed(const Duration(milliseconds: 2000));
-                        Navigator.push(
+                      if (pin.length == 6) {
+                        // Replace "employeeOTP" with the actual OTP for employees
+                        if (pin == "111111") {
+                          CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            text: AppLocalizations.of(context)!.otpverified,
+                            autoCloseDuration: const Duration(seconds: 2),
+                            lottieAsset: "images/verified.json",
+                            animType: CoolAlertAnimType.scale,
+                          );
+                          await Future.delayed(const Duration(milliseconds: 2000));
+                          // If the OTP is correct, navigate to the employee-specific screen
+                          Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const VendorScreen()),
-                        );}
+                            MaterialPageRoute(
+                              builder: (context) => ecodescreen(),
+                            ),
+                          );
+                        } else {
+                          CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            text: AppLocalizations.of(context)!.otpverified,
+                            autoCloseDuration: const Duration(seconds: 2),
+                            lottieAsset: "images/verified.json",
+                            animType: CoolAlertAnimType.scale,
+                          );
+                          await Future.delayed(const Duration(milliseconds: 2000));
+                          // If the OTP is incorrect, navigate to the vendor screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const VendorScreen(),
+                            ),
+                          );
+                        }
+                      }
                     },
+
                   ),
                   const SizedBox(height: 20.0),
                 ],

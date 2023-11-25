@@ -5,7 +5,7 @@ import 'dart:io';
 import 'employee.model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EmployeesScreen extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('Employees', style: TextStyle(color: Colors.white, fontSize: 24)),
+        title: Text(AppLocalizations.of(context)!.employee, style: TextStyle(color: Colors.white, fontSize: 24)),
         actions: [
           IconButton(
             icon: Icon(Icons.add, color: Colors.white),
@@ -49,12 +49,12 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             padding: EdgeInsets.all(16.0),
             child: Container( // Wrap the TextField with a Container
               decoration: BoxDecoration(
-                color: Color(0xff358597).withOpacity(0.3), // Set the desired color and opacity
-                borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+                color: Color(0xff358597).withOpacity(0.3),
+                borderRadius: BorderRadius.circular(20.0),
               ),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search employees',
+                  hintText: AppLocalizations.of(context)!.searchemployee,
                   prefixIcon: Icon(Icons.search),
                   border: InputBorder.none, // Remove the border to let the container's decoration handle it
                 ),
@@ -158,7 +158,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Add Employee', style: TextStyle(color: Colors.white, fontSize: 24)),
+        title: Text(AppLocalizations.of(context)!.addemployee, style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: AppColors.themeColor2,
         automaticallyImplyLeading: true,
         elevation: 0,
@@ -168,8 +168,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'Enter Employee Details',
+            Text(
+              AppLocalizations.of(context)!.details,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -293,7 +293,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   Size(double.infinity, buttonHeight),
                 ),
               ),
-              child: Text('Add Employee'),
+              child: Text(AppLocalizations.of(context)!.addemployee),
             ),
           ],
         ),
