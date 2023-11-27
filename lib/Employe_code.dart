@@ -2,7 +2,6 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'Widgets/AppColors.dart';
-
 import 'for_employee.dart';
 
 class ecodescreen extends StatefulWidget {
@@ -11,7 +10,6 @@ class ecodescreen extends StatefulWidget {
   @override
   State<ecodescreen> createState() => _ecodescreenState();
 }
-
 class _ecodescreenState extends State<ecodescreen> {
   final TextEditingController ecoController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
