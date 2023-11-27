@@ -1,9 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:vendor/Vendor_or_Employe.dart';
 import 'Widgets/AppColors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'for_employee.dart';
 
@@ -32,9 +30,9 @@ class _ecodescreenState extends State<ecodescreen> {
                 children: [
                   const Spacer(),
                   Text(
-                    "Enter your 4-digit code",
+                    "Enter your Employee Passcode",
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -70,7 +68,7 @@ class _ecodescreenState extends State<ecodescreen> {
                       CoolAlert.show(
                         context: context,
                         type: CoolAlertType.loading,
-                        text: "Login Successful",
+                        text: "Employee Passcode Accepted",
                         autoCloseDuration: const Duration(seconds: 2),
                         lottieAsset: "images/signup.json",
                         animType: CoolAlertAnimType.scale,

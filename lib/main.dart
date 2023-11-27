@@ -35,7 +35,7 @@ void main() async {
               Locale('ar'),
             ],
             debugShowCheckedModeBanner: false,
-            home: Splashscreen(),
+            home: HomeScreen(),
           );
         },
       ),

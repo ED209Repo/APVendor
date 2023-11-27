@@ -104,7 +104,7 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  // final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController designationController = TextEditingController();
   final TextEditingController branchController = TextEditingController();
@@ -180,11 +180,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               controller: nameController,
               decoration: _inputDecoration('Name'),
             ),
-            SizedBox(height: 7),
-            TextField(
-              controller: emailController,
-              decoration: _inputDecoration('Email'),
-            ),
+            // SizedBox(height: 7),
+            // TextField(
+            //   controller: emailController,
+            //   decoration: _inputDecoration('Email'),
+            // ),
             SizedBox(height: 7),
             TextField(
               controller: phoneNumberController,
@@ -270,12 +270,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 String? imagePath = await saveSelectedImage();
                 Employee newEmployee = Employee(
                   name: nameController.text,
-                  email: emailController.text,
                   phoneNumber: phoneNumberController.text,
                   designation: designationController.text,
                   branch: branchController.text,
                   gender: gender,
-                  profileImage: imagePath ?? '',
+                  profileImage: imagePath ?? '', email: '',
                 );
                 widget.onEmployeeAdded(newEmployee);
 
