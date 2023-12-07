@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/HomeScreen.dart';
+import 'package:vendor/Register.dart';
 import 'MenuScreen.dart';
 import 'Widgets/AppColors.dart';
 import 'chart2.dart';
@@ -44,6 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         width: drawerWidth,
         child: Drawer(
           child: Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: ListView.builder(
               itemCount: _drawerItems.length + 5,
               itemBuilder: (context, index) {
@@ -117,6 +119,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               MaterialPageRoute(builder: (context) => HomeScreen()), // Replace with your PaymentsScreen
                             );
                             break;
+                          case 'Logout':
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=> registerscreen()));
+                        break;
                         // Add more cases for other drawer items
 
                           default:

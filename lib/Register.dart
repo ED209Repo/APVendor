@@ -48,6 +48,21 @@ class _registerscreenState extends State<registerscreen> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double buttonHeight = screenHeight * 0.08;
     return  Scaffold(
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.login,
+            style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 40,
+      ),
       body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
@@ -56,24 +71,24 @@ class _registerscreenState extends State<registerscreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: (){},
-                        child: Icon(Icons.arrow_back_ios_new),
-                      ),
-                      const Spacer(),
-                      const Spacer(),
-                      Text(AppLocalizations.of(context)!.login,
-                        style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold
-                      ),),
-                      const Spacer(),
-                      const Spacer()
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: (){},
+                  //       child: Icon(Icons.arrow_back_ios_new),
+                  //     ),
+                  //     const Spacer(),
+                  //     const Spacer(),
+                  //     Text(AppLocalizations.of(context)!.login,
+                  //       style: TextStyle(
+                  //       fontSize: 25,
+                  //       fontWeight: FontWeight.bold
+                  //     ),),
+                  //     const Spacer(),
+                  //     const Spacer()
+                  //   ],
+                  // ),
                   const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

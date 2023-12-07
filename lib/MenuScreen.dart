@@ -42,7 +42,6 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('Number of items: ${MenuScreen.items.length}');
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.menu),
