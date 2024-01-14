@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'Widgets/AppColors.dart';
 import 'for_employee.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ecodescreen extends StatefulWidget {
   const ecodescreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _ecodescreenState extends State<ecodescreen> {
                 children: [
                   const Spacer(),
                   Text(
-                    "Enter your Employee Passcode",
+                    AppLocalizations.of(context)!.ecode,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -70,7 +71,7 @@ class _ecodescreenState extends State<ecodescreen> {
                       CoolAlert.show(
                         context: context,
                         type: CoolAlertType.loading,
-                        text: "Employee Passcode Accepted",
+                        text: AppLocalizations.of(context)!.passaccepted,
                         autoCloseDuration: const Duration(seconds: 2),
                         lottieAsset: "images/signup.json",
                         animType: CoolAlertAnimType.scale,
@@ -87,7 +88,7 @@ class _ecodescreenState extends State<ecodescreen> {
                       CoolAlert.show(
                         context: context,
                         type: CoolAlertType.error,
-                        text: "Invalid PIN",
+                        text: AppLocalizations.of(context)!.invalidpin,
                         animType: CoolAlertAnimType.scale,
                       );
                     }

@@ -24,6 +24,7 @@ class _HomeScreenState extends State<EmployeeHomeScreen> {
     super.didChangeDependencies();
     // Initialize _screens list here
     _screens = [
+
                 Container(
                   child: SlidingSegmentedControlDemo(),
                 ),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/HomeScreen.dart';
+import 'package:vendor/Register.dart';
+import 'package:vendor/onBoardingScreen.dart';
 import 'MenuScreen.dart';
 import 'Widgets/AppColors.dart';
 import 'chart2.dart';
 import 'charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -15,12 +19,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 
   late List<String> _drawerItems;
+  logout() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.remove('phoneNumber');
+    await preferences.remove('username');
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _drawerItems = [
-      AppLocalizations.of(context)!.dashboard, 
+      AppLocalizations.of(context)!.dashboard,
       AppLocalizations.of(context)!.reports,
       AppLocalizations.of(context)!.payments,
       AppLocalizations.of(context)!.menu,
@@ -41,11 +50,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: AppColors.themeColor2,
       ),
       drawer: Container(
-        
         width: drawerWidth,
         child: Drawer(
-          backgroundColor: AppColors.themeColor2,
           child: Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: ListView.builder(
               itemCount: _drawerItems.length + 5,
               itemBuilder: (context, index) {
@@ -76,17 +84,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
                 } else if (index == _drawerItems.length + 1) {
                   // Divider after the main items
-                  return Divider(thickness: 1, color: Colors.white, indent: 20, endIndent: 20);
+                  return Divider(thickness: 1, color: Colors.grey, indent: 20, endIndent: 20);
                 } else if (index == _drawerItems.length + 2) {
                   // Account Pages header
                   return ListTile(
-                    title: Text(AppLocalizations.of(context)!.accountpages, style: TextStyle(color: Colors.white)),
+                    title: Text(AppLocalizations.of(context)!.accountpages),
                   );
                 } else if (index == _drawerItems.length + 3) {
                   // Profile item
                   return ListTile(
-                    leading: Icon(Icons.person, color: Colors.white),
-                    title: Text(AppLocalizations.of(context)!.profile, style: TextStyle(color: Colors.white)),
+                    leading: Icon(Icons.person),
+                    title: Text(AppLocalizations.of(context)!.profile),
                     onTap: () {
                       // Add functionality for Profile
                     },
@@ -94,17 +102,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 } else if (index == _drawerItems.length + 4) {
                   // Logout item
                   return ListTile(
-                    leading: Icon(Icons.logout, color: Colors.white),
-                    title: Text(AppLocalizations.of(context)!.logout, style: TextStyle(color: Colors.white)),
-                    onTap: () {
-                      // Add functionality for Logout
+                    leading: Icon(Icons.logout),
+                    title: Text(AppLocalizations.of(context)!.logout),
+                    onTap: () async {
+                      showDialog(context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              backgroundColor: AppColors.themeColor,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                              ),
+                              title:  Text(AppLocalizations.of(context)!.logout,
+                                style: const TextStyle(
+                                    color: Colors.white
+                                ),),
+                              content:  Text(AppLocalizations.of(context)!.areyousurewanttologout,
+                                style: const TextStyle(
+                                    color: Colors.white
+                                ),),
+                              actions: [
+                                TextButton(
+                                  child:  Text(AppLocalizations.of(context)!.cancel,
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                    ),),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child:  Text(AppLocalizations.of(context)!.logout,
+                                    style: const TextStyle(
+                                        color: Colors.red
+                                    ),),
+                                  onPressed: () async {// Close the dialog
+                                    await logout();
+                                    CoolAlert.show(context: context, type: CoolAlertType.loading,
+                                      text: AppLocalizations.of(context)!.loggedOutSuccessfull,
+                                      autoCloseDuration: const Duration(milliseconds: 2000),
+                                      lottieAsset: "images/signup.json",
+                                      animType: CoolAlertAnimType.scale,
+                                    );
+                                    await Future.delayed(const Duration(milliseconds: 2000));
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const OnboardScreen()),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+
                     },
                   );
                 } else {
                   // Regular drawer items
                   return ListTile(
-                    title: Text(_drawerItems[index - 1],
-                    style: TextStyle(color: Colors.white)),
+                    title: Text(_drawerItems[index - 1]),
                     onTap: () {
                       setState(() {
                         switch (_drawerItems[index - 1]) {
@@ -120,6 +175,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               MaterialPageRoute(builder: (context) => HomeScreen()), // Replace with your PaymentsScreen
                             );
                             break;
+                          case 'Logout':
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=> registerscreen()));
+                        break;
                         // Add more cases for other drawer items
 
                           default:
@@ -131,8 +191,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         }
                       });
                     },
-                    tileColor: _currentIndex == index - 1 ? Colors.white.withOpacity(0.2) : null,
-                    leading: _getDrawerIcon(index - 1), iconColor: Colors.white,
+                    tileColor: _currentIndex == index - 1 ? Colors.grey.withOpacity(0.5) : null,
+                    leading: _getDrawerIcon(index - 1),
                   );
                 }
               },
@@ -149,21 +209,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   SizedBox(height: 10),
                   _buildDashboardBox(
-                    title: 'Today\'s Sales',
+                    title: AppLocalizations.of(context)!.todaysales,
                     value: '\SR 500  +25',
                     color: Colors.transparent,
                     boxWidth: boxWidth,
                   ),
                   SizedBox(height: 10),
                   _buildDashboardBox(
-                    title: 'Today\'s Items Sold',
+                    title: AppLocalizations.of(context)!.todaysitemsold,
                     value: '100 +20',
                     color: Colors.transparent,
                     boxWidth: boxWidth,
                   ),
                   SizedBox(height: 10),
                   _buildDashboardBox(
-                    title: 'New Orders',
+                    title: AppLocalizations.of(context)!.neworders,
                     value: '5 +1',
                     color: Colors.transparent,
                     boxWidth: boxWidth,
@@ -192,7 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String additionalValue = '+' + parts[1].trim();
 
     return Container(
-      height: 55,
+      height: 68,
       width: boxWidth,
       decoration: BoxDecoration(
         color: color,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistogramData {
   HistogramData(this.x);
@@ -36,7 +37,9 @@ class _HistogramDefaultState extends State<HistogramDefault> {
   SfCartesianChart _buildDefaultHistogramChart() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'Customers', textStyle: TextStyle (color: Colors.black,
+      title: ChartTitle(
+          text: AppLocalizations.of(context)!.customers, textStyle:
+      TextStyle (color: Colors.black,
         fontSize: 26,
         fontWeight: FontWeight.bold,
         letterSpacing: 2)),
