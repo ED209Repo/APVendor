@@ -7,17 +7,16 @@ import 'Widgets/CustomButton.dart';
 import 'homeScreen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
   _SignupPageState createState() => _SignupPageState();
 }
-
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   String _fullname = '';
   String _username = '';
   String _email = '';
@@ -37,32 +36,43 @@ class _SignupPageState extends State<SignupPage> {
     pref.setString('username', username);
   }
 
-  Future<Map<String, dynamic>> _registerUser(
-      String username,
-      String fullname,
-      String email,
-      String gender,
-      String dob,
-      ) async {
-    final apiUrl = 'https://165e-206-84-144-36.ngrok-free.app/api/user/Signup'; // Replace with your actual API URL
+  register(String  email, userName, gender) async {
+    Map data = {
+      'userName': _usernameController.text,
+      'email': _emailController.text,
+      'gender': selectvalue,
+      'roleId': 2,
+      'phone': "0305768600",
+      'Dob':'2002',
+      'Address':"",
+      'CreatedAt':"2033333302",
+      'ProfileImage':"200999999992",
+      'LocationLatitude':"2002999999999",
+      'LocationLongitude':"200233232",
+      'anyPick_User':""
 
-    try {
-      final response = await http.post(
-        Uri.parse('$apiUrl/signup'), // Replace with the endpoint
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'username': username,
-          'fullname': fullname,
-          'email': email,
-          'gender': gender,
-          'dob': dob,
-        }),
-      );
+    };
+    print(data);
 
-      return jsonDecode(response.body);
-    } catch (e) {
-      print('API Error: $e');
-      throw e;
+    String body = json.encode(data);
+    var client = http.Client();
+    var uri = Uri.parse('https://04c6-206-84-149-102.ngrok-free.app/api/user/Signup');
+    var response = await http.post(
+    uri,
+    body: body,
+    headers: {
+    "Content-Type": "application/json",
+    "accept": "application/json",
+    "Access-Control-Allow-Origin": "*"
+    },
+    );
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+    //Or put here your next screen using Navigator.push() method
+    print('success');
+    } else {
+    print('error');
     }
   }
 
@@ -142,6 +152,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
               const SizedBox(height: 20.0),
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -275,45 +286,18 @@ class _SignupPageState extends State<SignupPage> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
 
-                      CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.loading,
-                        text: AppLocalizations.of(context)!.signUpSuccessfull,
-                        autoCloseDuration: const Duration(seconds: 2),
-                        lottieAsset: "images/signup.json",
-                        animType: CoolAlertAnimType.scale,
-                      );
+                    CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.loading,
+                    text: AppLocalizations.of(context)!.signUpSuccessfull,
+                    autoCloseDuration: const Duration(seconds: 2),
+                    lottieAsset: "images/signup.json",
+                    animType: CoolAlertAnimType.scale,
+                    );
 
-                      // Register the user with the backend
-                      try {
-                        final response = await _registerUser(
-                          _usernameController.text,
-                          _fullname,
-                          _email,
-                          selectvalue,
-                          SelectedDate,
-                        );
-
-                        // Handle the response from the backend
-                        print('Registration Successful: $response');
-
-                        _saveUsername(_usernameController.text);
-
-                        await Future.delayed(const Duration(milliseconds: 2000));
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      } catch (e) {
-                        // Handle registration error
-                        print('Registration Error: $e');
-                        CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          text: 'Registration failed. Please try again.',
-                        );
-                      }
-                    }
+                    // Register the user with the backend
+                    register(_usernameController.text, _emailController.text , selectvalue);
+                  }
                   },
                 ),
               ),
@@ -363,13 +347,12 @@ class _SignupPageState extends State<SignupPage> {
         );
       },
     );
-
     if (pickedDate != null) {
-      calculateAge(pickedDate);
-      String formattedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-      setState(() {
-        SelectedDate = formattedDate; // Update myAge with the selected date
-      });
+    calculateAge(pickedDate);
+    String formattedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    setState(() {
+    SelectedDate = formattedDate; // Update myAge with the selected date
+    });
     }
   }
 

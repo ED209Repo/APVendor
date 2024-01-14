@@ -127,6 +127,7 @@ class _SlidingSegmentedControlDemoState
         title: Text(AppLocalizations.of(context)!.orderqueue),
         backgroundColor: AppColors.themeColor2,
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

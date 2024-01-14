@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'Widgets/AppColors.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class _LineChart extends StatelessWidget {
   const _LineChart({required this.isShowingMainData});
 
@@ -315,8 +315,8 @@ class LineChartSample1State extends State<LineChartSample1> {
               const SizedBox(
                 height: 37,
               ),
-              const Text(
-                'Daily Sales',
+             Text(
+                AppLocalizations.of(context)!.dailysales,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,

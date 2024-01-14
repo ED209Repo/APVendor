@@ -138,7 +138,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                     width: 3,
                   ),
                 ),
-                labelText: 'Name',
+                labelText: AppLocalizations.of(context)!.name,
                 labelStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -158,7 +158,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                           width: 3,
                         ),
                       ),
-                      labelText: 'Price',
+                      labelText: AppLocalizations.of(context)!.price,
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -183,7 +183,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                           width: 3,
                         ),
                       ),
-                      labelText: 'Item Category',
+                      labelText: AppLocalizations.of(context)!.itemcategory,
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -208,7 +208,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                           width: 3,
                         ),
                       ),
-                      labelText: 'Ready Time',
+                      labelText: AppLocalizations.of(context)!.readytime,
                       labelStyle: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -250,7 +250,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                       ),
                       child: InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Item Image',
+                          labelText: AppLocalizations.of(context)!.itemimage,
                           labelStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -277,7 +277,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                     width: 3,
                   ),
                 ),
-                labelText: 'Description',
+                labelText: AppLocalizations.of(context)!.description,
                 labelStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -297,7 +297,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (variationNames.isNotEmpty) ...[
-                      Text('Variations:'),
+                      Text(AppLocalizations.of(context)!.variations),
                       for (int i = 0; i < variationNames.length; i++)
                         Text('${i + 1}. ${variationNames[i]}'),
                     ],
@@ -326,7 +326,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                   );
                 },
                 icon: Icon(Icons.add),
-                label: Text('Add Variations/Options'),
+                label: Text(AppLocalizations.of(context)!.addoptions),
                 style: TextButton.styleFrom(
                   foregroundColor: widget.themeColor,
                 ),
@@ -339,7 +339,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                 _saveItemData();
               },
               child: Text(
-                'Save Item',
+                AppLocalizations.of(context)!.saveitem,
                 style: TextStyle(color: Colors.white),
               ),
               style: ButtonStyle(
@@ -391,7 +391,7 @@ class AddOnsTab extends StatelessWidget {
                             width: 3,
                           ),
                         ),
-                        labelText: 'Name',
+                        labelText: AppLocalizations.of(context)!.name,
                         labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -411,7 +411,7 @@ class AddOnsTab extends StatelessWidget {
                             width: 3,
                           ),
                         ),
-                        labelText: 'Price',
+                        labelText: AppLocalizations.of(context)!.price,
                         labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -438,7 +438,7 @@ class AddOnsTab extends StatelessWidget {
                     width: 3,
                   ),
                 ),
-                labelText: 'Item Category',
+                labelText: AppLocalizations.of(context)!.itemcategory,
                 labelStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -464,7 +464,7 @@ class AddOnsTab extends StatelessWidget {
                       ),
                       child: InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Item Image',
+                          labelText: AppLocalizations.of(context)!.itemimage,
                           labelStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -488,7 +488,7 @@ class AddOnsTab extends StatelessWidget {
                 // Save Item Action
               },
               child: Text(
-                'Save Item',
+                AppLocalizations.of(context)!.saveitem,
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               style: ButtonStyle(
@@ -535,7 +535,7 @@ class _AddVariationsScreenState extends State<AddVariationsScreen> {
     final double buttonHeight = screenHeight * 0.06;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Variations/Options', style: TextStyle(color: Colors.white, fontSize: 20)),
+        title: Text(AppLocalizations.of(context)!.addoptions, style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: widget.themeColor,
         elevation: 0,
       ),

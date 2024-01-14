@@ -178,7 +178,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             SizedBox(height: 16),
             TextField(
               controller: nameController,
-              decoration: _inputDecoration('Name'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.name),
             ),
             // SizedBox(height: 7),
             // TextField(
@@ -188,25 +188,25 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             SizedBox(height: 7),
             TextField(
               controller: phoneNumberController,
-              decoration: _inputDecoration('Phone Number'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.phonenumber),
             ),
             SizedBox(height: 7),
             TextField(
               controller: designationController,
-              decoration: _inputDecoration('Designation'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.designation),
             ),
             SizedBox(height: 7),
             TextField(
               controller: branchController,
-              decoration: _inputDecoration('Branch'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.branch),
             ),
             SizedBox(height: 7),
             Row(
               children: [
-                Text('Gender:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                Text(AppLocalizations.of(context)!.gender, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 Radio<String>(
-                  value: 'Male',
+                  value: AppLocalizations.of(context)!.male,
                   groupValue: gender,
                   onChanged: (value) {
                     setState(() {
@@ -214,9 +214,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     });
                   },
                 ),
-                Text('Male'),
+                Text(AppLocalizations.of(context)!.male),
                 Radio<String>(
-                  value: 'Female',
+                  value: AppLocalizations.of(context)!.female,
                   groupValue: gender,
                   onChanged: (value) {
                     setState(() {
@@ -224,13 +224,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     });
                   },
                 ),
-                Text('Female'),
+                Text(AppLocalizations.of(context)!.female),
               ],
             ),
             SizedBox(height: 7),
             Row(
               children: [
-                Text('Date Of Birth: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                Text(AppLocalizations.of(context)!.dob, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                 Text(selectedDate != null
                     ? DateFormat('dd-MM-yyyy').format(selectedDate!)
                     : ''),
@@ -261,7 +261,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     await openGallery();
                   },
                 ),
-                Text('Add Profile Image', style: TextStyle(color: Colors.black)),
+                Text(AppLocalizations.of(context)!.addprofileimage, style: TextStyle(color: Colors.black)),
               ],
             ),
             SizedBox(height: 10),

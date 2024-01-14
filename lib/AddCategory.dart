@@ -44,12 +44,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           children: [
             TextField(
               controller: categoryNameController,
-              decoration: _inputDecoration('Category Name'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.categoryname),
             ),
             SizedBox(height: 16),
             TextField(
               controller: categoryDescriptionController,
-              decoration: _inputDecoration('Category Description'),
+              decoration: _inputDecoration(AppLocalizations.of(context)!.categorydescription),
             ),
             SizedBox(height: 16),
             Align(
