@@ -2,7 +2,7 @@
     <application
         android:label="AnyPick Vendor"
         android:name="${applicationName}"
-        android:icon="@images/mainlogo1.png">
+        android:icon="@mipmap/mainlogo1">
         <activity
             android:name=".MainActivity"
             android:exported="true"

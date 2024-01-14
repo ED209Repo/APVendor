@@ -122,6 +122,14 @@
   "addonsonly": "Add-ons Only",
   "addrestaurant": "Add Restaurant",
   "restaurantdetails": "Enter your Restaurant's details",
-  "addcategory": "Add Category"
-
+  "addcategory": "Add Category",
+  "businessid": "Business ID",
+  "licenseid": "License ID",
+  "offdays": "Off Days",
+  "type": "Type",
+"slogan": "Slogan",
+"opentime": "Open time",
+"closetime": "Close time",
+"logoimage": "Logo image",
+"name": "Name"
   }

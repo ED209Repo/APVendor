@@ -20,7 +20,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _drawerItems = [
-      AppLocalizations.of(context)!.dashboard,
+      AppLocalizations.of(context)!.dashboard, 
       AppLocalizations.of(context)!.reports,
       AppLocalizations.of(context)!.payments,
       AppLocalizations.of(context)!.menu,
@@ -41,8 +41,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: AppColors.themeColor2,
       ),
       drawer: Container(
+        
         width: drawerWidth,
         child: Drawer(
+          backgroundColor: AppColors.themeColor2,
           child: Container(
             child: ListView.builder(
               itemCount: _drawerItems.length + 5,
@@ -74,17 +76,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
                 } else if (index == _drawerItems.length + 1) {
                   // Divider after the main items
-                  return Divider(thickness: 1, color: Colors.grey, indent: 20, endIndent: 20);
+                  return Divider(thickness: 1, color: Colors.white, indent: 20, endIndent: 20);
                 } else if (index == _drawerItems.length + 2) {
                   // Account Pages header
                   return ListTile(
-                    title: Text(AppLocalizations.of(context)!.accountpages),
+                    title: Text(AppLocalizations.of(context)!.accountpages, style: TextStyle(color: Colors.white)),
                   );
                 } else if (index == _drawerItems.length + 3) {
                   // Profile item
                   return ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text(AppLocalizations.of(context)!.profile),
+                    leading: Icon(Icons.person, color: Colors.white),
+                    title: Text(AppLocalizations.of(context)!.profile, style: TextStyle(color: Colors.white)),
                     onTap: () {
                       // Add functionality for Profile
                     },
@@ -92,8 +94,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 } else if (index == _drawerItems.length + 4) {
                   // Logout item
                   return ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text(AppLocalizations.of(context)!.logout),
+                    leading: Icon(Icons.logout, color: Colors.white),
+                    title: Text(AppLocalizations.of(context)!.logout, style: TextStyle(color: Colors.white)),
                     onTap: () {
                       // Add functionality for Logout
                     },
@@ -101,7 +103,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 } else {
                   // Regular drawer items
                   return ListTile(
-                    title: Text(_drawerItems[index - 1]),
+                    title: Text(_drawerItems[index - 1],
+                    style: TextStyle(color: Colors.white)),
                     onTap: () {
                       setState(() {
                         switch (_drawerItems[index - 1]) {
@@ -128,8 +131,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         }
                       });
                     },
-                    tileColor: _currentIndex == index - 1 ? Colors.grey.withOpacity(0.5) : null,
-                    leading: _getDrawerIcon(index - 1),
+                    tileColor: _currentIndex == index - 1 ? Colors.white.withOpacity(0.2) : null,
+                    leading: _getDrawerIcon(index - 1), iconColor: Colors.white,
                   );
                 }
               },

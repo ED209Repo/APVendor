@@ -122,5 +122,14 @@
   "addonsonly": "الإضافات فقط",
   "addrestaurant": "أضف مطعم",
   "restaurantdetails": "أدخل تفاصيل المطعم",
-  "addcategory": "إضافة فئة"
+  "addcategory": "إضافة فئة",
+  "businessid": "معرف الأعمال",
+"offdays": "أيام العطلة",
+"licenseid": "معرف الترخيص",
+"type": "يكتب",
+"slogan": "شعار",
+"opentime": "وقت متاح",
+"closetime": "وقت الاغلاق",
+"logoimage": "صورة الشعار",
+"name": "اسم"
 }

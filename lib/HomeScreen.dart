@@ -24,37 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.didChangeDependencies();
     // Initialize _screens list here
     _screens = [
-      Container(
-        color: AppColors.themeColor,
-        alignment: Alignment.center,
-        child: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.themeColor2,
-              elevation: 0,
-              automaticallyImplyLeading: false,
-              title: Text(
-                AppLocalizations.of(context)!.orderqueue,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-              centerTitle: true,
-            ),
-            body: Column(
-              children: [
-                SizedBox(height: 10), // Add a gap here
                 Container(
                   child: SlidingSegmentedControlDemo(),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
+
       // Screen for 'Employee' tab
       Container(
         child: EmployeesScreen(),
