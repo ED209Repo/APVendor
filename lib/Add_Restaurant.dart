@@ -103,7 +103,7 @@ class _AddRestaurantScreenState extends State<AddRestaurantScreen> {
     }
   }
   Future<void> _sendApiRequest(Restaurant newRestaurant) async {
-    final url = 'https://41e1-206-84-148-41.ngrok-free.app/api/searchRest/Add_Resturant'; // Replace with your actual API endpoint
+    final url = 'https://f663-154-198-91-35.ngrok-free.app/api/searchRest/Add_Resturant'; // Replace with your actual API endpoint
     print('offdays: ${newRestaurant.offDays}');
 
     final Map<String, dynamic> requestBody = {

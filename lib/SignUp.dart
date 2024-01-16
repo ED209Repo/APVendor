@@ -58,7 +58,7 @@ class _SignupPageState extends State<SignupPage> {
 
     String body = json.encode(data);
      var client = http.Client();
-        var uri = Uri.parse('https://04c6-206-84-149-102.ngrok-free.app/api/user/Signup');
+        var uri = Uri.parse('https://f663-154-198-91-35.ngrok-free.app/api/user/Signup');
         var response = await http.post(
        uri,
        body: body,
