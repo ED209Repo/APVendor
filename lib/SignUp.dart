@@ -296,6 +296,13 @@ class _SignupPageState extends State<SignupPage> {
                         lottieAsset: "images/signup.json",
                         animType: CoolAlertAnimType.scale,
                       );
+                      await Future.delayed(const Duration(milliseconds: 2000));
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
 
                       // Register the user with the backend
                       register(_usernameController.text, _emailController.text , selectvalue);

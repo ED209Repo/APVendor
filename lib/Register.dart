@@ -5,6 +5,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vendor/HomeScreen.dart';
+import 'package:vendor/OtpScreen.dart';
 import 'package:vendor/SignUp.dart';
 import 'Widgets/AppColors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -251,6 +252,12 @@ class _registerscreenState extends State<registerscreen> {
 
                     // Save the phone number locally
                     await savePhoneNumberLocally(phoneController.text);
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => otpscreen(verificationId: '',),
+                            ),
+                          );
 
                     print('End of signup button logic');
                     // Perform login API call
