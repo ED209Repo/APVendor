@@ -54,7 +54,7 @@ class _MenuScreenState extends State<MenuScreen> {
             onPressed: () async {
               final result = await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddItemsScreen(themeColor: AppColors.themeColor)),
+                MaterialPageRoute(builder: (context) => AddItemsScreen(themeColor: AppColors.themeColor, categoryName: '',)),
               );
               if (result != null && result is ItemData) {
                 setState(() {

@@ -5,7 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddItemsScreen extends StatefulWidget {
   final Color themeColor;
-  AddItemsScreen({required this.themeColor});
+  final String categoryName;
+  AddItemsScreen({required this.themeColor, required this.categoryName});
 
   @override
   _AddItemsScreenState createState() => _AddItemsScreenState();
@@ -60,7 +61,7 @@ class _AddItemsScreenState extends State<AddItemsScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  AddItemsTab(categoryName: 'Category 1', selectedTime: selectedTime, themeColor: widget.themeColor),
+                  AddItemsTab(categoryName: widget.categoryName, selectedTime: selectedTime, themeColor: widget.themeColor),
                   AddOnsTab(themeColor: widget.themeColor),
                 ],
               ),
@@ -169,7 +170,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                 SizedBox(width: 16),
                 Expanded(
                   child: DropdownButtonFormField(
-                    items: ['Category 1', 'Category 2', 'Category 3']
+                    items: [widget.categoryName]
                         .map((String category) {
                       return DropdownMenuItem(
                         value: category,

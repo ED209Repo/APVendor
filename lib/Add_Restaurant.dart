@@ -315,7 +315,7 @@ class _AddRestaurantScreenState extends State<AddRestaurantScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddItemsScreen(themeColor: AppColors.themeColor2)),
+                  MaterialPageRoute(builder: (context) => AddItemsScreen(themeColor: AppColors.themeColor2, categoryName: '')),
                 );
               },
               icon: Icon(Icons.add),
