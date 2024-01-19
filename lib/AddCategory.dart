@@ -30,41 +30,46 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     );
   }
   Future<void> _addCategory() async {
-    final String categoryName = categoryNameController.text;
-    final String categoryDescription = categoryDescriptionController.text;
+  final String categoryName = categoryNameController.text;
+  final String categoryDescription = categoryDescriptionController.text;
 
-    // Replace the URL with your actual API endpoint
-    final String apiUrl = 'https://00f3-154-192-64-39.ngrok-free.app/api/ResturantCategory/ResturantCategory';
+  final String apiUrl =
+      'https://00f3-154-192-64-39.ngrok-free.app/api/ResturantCategory/ResturantCategory';
 
-    // Replace this with the actual request payload
-    final Map<String, dynamic> requestData = {
-      'rest_Cat_id': '',
-      'rest_id': '',
-      'cat_temp_id': '',
-      'name': categoryName,
-      'parent_Category': '',
-      'categoryDescription': categoryDescription,
-    };
+  final Map<String, dynamic> requestData = {
+    'rest_Cat_id': '0',
+    'rest_id': '0',
+    'cat_temp_id': '0',
+    'name': categoryName,
+    'parent_Category': '0',
+    'categoryDescription': categoryDescription,
+    'ad': 'S', 
+  };
 
-    try {
-      final http.Response response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestData),
-      );
+  try {
+    print('Request Payload: ${jsonEncode(requestData)}');
 
-      if (response.statusCode == 200) {
-        // API call was successful, you can handle the response if needed
-        print('Category added successfully');
-      } else {
-        // API call failed, handle the error
-        print('Failed to add category. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      // Handle other errors such as network errors
-      print('Error during API call: $error');
+    final http.Response response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestData),
+    );
+
+    print('API Response Status Code: ${response.statusCode}');
+    print('API Response Body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      print('Category added successfully');
+    } else {
+      print('Failed to add category. Status code: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error during API call: $error');
+    if (error is http.ClientException) {
+      print('ClientException: ${error.message}');
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
