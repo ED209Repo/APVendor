@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'MenuScreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class AddItemsScreen extends StatefulWidget {
   final Color themeColor;
   final String categoryName;
@@ -91,14 +91,58 @@ class _AddItemsTabState extends State<AddItemsTab> {
   late TextEditingController priceController;
 
   List<String> variationNames = [];
+List<String> categoryNames = [];
 
-  @override
-  void initState() {
-    super.initState();
-    readyTimeController = TextEditingController();
-    nameController = TextEditingController();
-    priceController = TextEditingController();
+@override
+void initState() {
+  super.initState();
+  readyTimeController = TextEditingController();
+  nameController = TextEditingController();
+  priceController = TextEditingController();
+
+  // Fetch category names when the screen initializes
+  fetchCategoryNames().then((categories) {
+    setState(() {
+      categoryNames = categories;
+    });
+  });
+}
+
+Future<List<String>> fetchCategoryNames() async {
+  final String apiUrl = 'https://1c1d-2407-d000-a-34c9-4d24-935b-1a6a-d4d8.ngrok-free.app/api/ResturantCategory/ResturantCategory';
+
+  try {
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      // Parse the response and return category names
+      dynamic responseData = json.decode(response.body);
+
+      if (responseData is Map<String, dynamic> && responseData.containsKey('data')) {
+        dynamic data = responseData['data'];
+
+        if (data is List<dynamic>) {
+          // Assuming each category has a 'cat_name' field
+          List<String> categoryNames = data.map((category) => category['cat_name'].toString()).toList();
+          return categoryNames;
+        } else if (data is String) {
+          // Handle the case where 'data' is a String (single category)
+          return [data.toString()];
+        } else {
+          throw Exception('Invalid data format in the response');
+        }
+      } else {
+        throw Exception('Invalid response format');
+      }
+    } else {
+      throw Exception('Failed to fetch category names. Status code: ${response.statusCode}');
+    }
+  } catch (error) {
+    throw Exception('Error during API call: $error');
   }
+}
+
+
 
   void updateVariationNames(String newVariationName) {
     setState(() {
@@ -170,7 +214,7 @@ class _AddItemsTabState extends State<AddItemsTab> {
                 SizedBox(width: 16),
                 Expanded(
                   child: DropdownButtonFormField(
-                    items: [widget.categoryName]
+                    items: categoryNames
                         .map((String category) {
                       return DropdownMenuItem(
                         value: category,

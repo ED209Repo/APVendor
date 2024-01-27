@@ -103,7 +103,7 @@ class _AddRestaurantScreenState extends State<AddRestaurantScreen> {
     }
   }
   Future<void> _sendApiRequest(Restaurant newRestaurant) async {
-    final url = 'https://f663-154-198-91-35.ngrok-free.app/api/searchRest/Add_Resturant'; // Replace with your actual API endpoint
+    final url = 'https://1c1d-2407-d000-a-34c9-4d24-935b-1a6a-d4d8.ngrok-free.app/api/searchRest/Add_Resturant'; // Replace with your actual API endpoint
     print('offdays: ${newRestaurant.offDays}');
 
     final Map<String, dynamic> requestBody = {
@@ -295,11 +295,22 @@ class _AddRestaurantScreenState extends State<AddRestaurantScreen> {
           Align(
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
-              onPressed: () {
+              onPressed: () async {
+                Restaurant newRestaurant = Restaurant(
+                name: nameController.text,
+                type: typeController.text,
+                slogan: sloganController.text,
+                combinedTime: getCombinedTime(),
+                offDays: selectedOffDays,
+                businessId: businessController.text,
+                licenseId: licenseController.text,
+                location: locationController.text, openingTime: openingTime, closingTime: closingTime,
+              );
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddCategoryScreen()),
                 );
+                await _sendApiRequest(newRestaurant);
               },
               icon: Icon(Icons.add),
               label: Text(AppLocalizations.of(context)!.addcategory),

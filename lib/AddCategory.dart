@@ -34,7 +34,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
   final String categoryDescription = categoryDescriptionController.text;
 
   final String apiUrl =
-      'https://00f3-154-192-64-39.ngrok-free.app/api/ResturantCategory/ResturantCategory';
+      'https://1c1d-2407-d000-a-34c9-4d24-935b-1a6a-d4d8.ngrok-free.app/api/ResturantCategory/ResturantCategory';
 
   final Map<String, dynamic> requestData = {
     'rest_Cat_id': '0',

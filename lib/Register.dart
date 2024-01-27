@@ -51,7 +51,7 @@ class _registerscreenState extends State<registerscreen> {
        String uuid =  Uuid().v4();
        print(uuid);
         var client = http.Client();
-        var uri = Uri.parse('https://f663-154-198-91-35.ngrok-free.app/api/user/login?Devicid=$uuid&Roleid=2&Verified=true&phone=$phoneController');
+        var uri = Uri.parse('https://my-json-server.typicode.com/alirana50/demoAP/login');
         var response = await client.post(uri);
         print(response.body);
         if (response.statusCode == 404){
