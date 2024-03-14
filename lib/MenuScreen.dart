@@ -44,7 +44,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.menu),
+        title: Text(AppLocalizations.of(context)!.menu, style: TextStyle(color: Colors.white),),
         backgroundColor: AppColors.themeColor,
         automaticallyImplyLeading: false,
         centerTitle: true,

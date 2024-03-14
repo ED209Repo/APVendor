@@ -124,7 +124,7 @@ class _SlidingSegmentedControlDemoState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.orderqueue),
+        title: Text(AppLocalizations.of(context)!.orderqueue, style: TextStyle(color: Colors.white)),
         backgroundColor: AppColors.themeColor2,
         centerTitle: true,
         automaticallyImplyLeading: false,

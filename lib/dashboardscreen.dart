@@ -45,13 +45,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.home),
+        title: Text(AppLocalizations.of(context)!.home,style: TextStyle(color: Colors.white,)),
         centerTitle: true,
         backgroundColor: AppColors.themeColor2,
       ),
       drawer: Container(
         width: drawerWidth,
         child: Drawer(
+          backgroundColor: Colors.white,
           child: Container(
             margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: ListView.builder(
